@@ -65,6 +65,14 @@ bool DFR_Radar::begin()
   return true;
 }
 
+void DFR_Radar::setStream( Stream *s ) {
+    sensorUART = s;
+}
+
+bool DFR_Radar::isReady() {
+    return sensorUART != nullptr;
+}
+
 size_t DFR_Radar::readLines( char *buffer, size_t lineCount )
 {
   unsigned long timeLimit = millis() + readPacketTimeout;
@@ -438,8 +446,8 @@ bool DFR_Radar::sendCommand( const char *command, const char *acceptableResponse
   static const size_t minResponseLength = min( successLength, failLength );
 
   const size_t commandLength = strlen( command );
-  const size_t acceptableLength = strlen( acceptableResponse );
   size_t minLength = min( commandLength, minResponseLength );
+  const size_t acceptableLength = acceptableResponse == NULL ? minLength : strlen( acceptableResponse );
 
   if( acceptableResponse != NULL )
     minLength = min( acceptableLength, minLength );

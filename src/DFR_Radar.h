@@ -36,6 +36,21 @@ class DFR_Radar
     bool begin( void );
 
     /**
+     * @brief Set the serial port to use for communicating with the sensor
+     *
+     * @param s  The serial port to use
+     */
+    void setStream( Stream *s );
+
+    /**
+     * @brief Check if the sensor is ready to accept commands
+     *
+     * @return true if the sensor is ready;
+     *         false if the sensor is not ready
+     */
+    bool isReady();
+
+    /**
      * @brief Configure sensor detection range
      *
      * @note Values are in meters; minimum is 0, maximum is 9.45; end must be greater than start.
@@ -185,7 +200,6 @@ class DFR_Radar
      *         false if the sensor failed to stop or if the ecommand failed
      */
     bool factoryReset( void );
-
 
   private:
 
